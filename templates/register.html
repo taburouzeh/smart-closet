@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Smart Closet</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile.css') }}">
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h2 class="logo">Smart Closet</h2>
+
+        <div class="nav-links">
+            <a href="/">
+                <button class="nav-btn">Home</button>
+            </a>
+
+            <a href="/login">
+                <button class="nav-btn">Login</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="form-page">
+        <div class="form-container">
+
+            <h1>Create Account</h1>
+
+            <p class="form-text">
+                Join Smart Closet and organize your wardrobe smarter.
+            </p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+
+                <input type="text"
+                       name="username"
+                       placeholder="Enter Username"
+                       required>
+
+                <input type="email"
+                       name="email"
+                       placeholder="Enter Email"
+                       required>
+
+
+                <input type="date"
+                       name="birthdate"
+                       required>
+
+                <div class="password-box">
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           placeholder="Enter Password"
+                           required>
+
+                    <span onclick="togglePassword('password', this)">👁</span>
+                </div>
+
+                <div class="password-box">
+                    <input type="password"
+                           id="confirm_password"
+                           name="confirm_password"
+                           placeholder="Verify Password"
+                           required>
+
+                    <span onclick="togglePassword('confirm_password', this)">👁</span>
+                </div>
+
+                <p id="password-message"
+                   style="color:red; margin-top:6px; font-size:12px; text-align:left; display:none;">
+                </p>
+
+                <button type="submit" class="main-btn">
+                    Register
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm_password");
+        const message = document.getElementById("password-message");
+
+        confirmPassword.addEventListener("keyup", function(){
+
+            if(confirmPassword.value.length > 0 &&
+               password.value != confirmPassword.value){
+
+                message.style.display = "block";
+                message.innerText = "Passwords do not match!";
+            }
+            else{
+                message.style.display = "none";
+            }
+        });
+
+        function togglePassword(inputId, icon){
+
+            const input = document.getElementById(inputId);
+
+            if(input.type === "password"){
+                input.type = "text";
+                icon.innerHTML = "🙈";
+            }
+            else{
+                input.type = "password";
+                icon.innerHTML = "👁";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

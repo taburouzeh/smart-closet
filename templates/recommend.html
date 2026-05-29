@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Recommend Outfit | Smart Closet</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile.css') }}">
+</head>
+
+<body class="recommend-page">
+
+    <div id="sidebar" class="sidebar">
+        <button class="close-sidebar"
+                onclick="toggleSidebar()">✕</button>
+
+        <a href="/">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/upload">Upload</a>
+        <a href="/closet">My Closet</a>
+        <a href="/recommend">Recommend Outfit</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="navbar">
+        <div class="left-nav">
+            <button class="menu-btn"
+                    onclick="toggleSidebar()">☰</button>
+
+            <h2 class="logo">Smart Closet</h2>
+        </div>
+    </div>
+
+    <div class="closet-page-box">
+
+        <h1 class="closet-title">Smart Outfit Generator</h1>
+
+        <p class="closet-text">
+            Generate outfits based on weather and style
+        </p>
+
+        <form method="POST"
+              action="/recommend"
+              class="recommend-form">
+<select name="city" required>
+
+    <option value="">Select City</option>
+
+    <option value="Amman" {% if city == 'Amman' %}selected{% endif %}>Amman</option>
+
+    <option value="Irbid" {% if city == 'Irbid' %}selected{% endif %}>Irbid</option>
+
+    <option value="Aqaba" {% if city == 'Aqaba' %}selected{% endif %}>Aqaba</option>
+
+    <option value="Zarqa" {% if city == 'Zarqa' %}selected{% endif %}>Zarqa</option>
+
+    <option value="Mafraq" {% if city == 'Mafraq' %}selected{% endif %}>Mafraq</option>
+
+    <option value="Salt" {% if city == 'Salt' %}selected{% endif %}>Salt</option>
+
+    <option value="Madaba" {% if city == 'Madaba' %}selected{% endif %}>Madaba</option>
+
+    <option value="Jerash" {% if city == 'Jerash' %}selected{% endif %}>Jerash</option>
+
+    <option value="Ajloun" {% if city == 'Ajloun' %}selected{% endif %}>Ajloun</option>
+
+    <option value="Karak" {% if city == 'Karak' %}selected{% endif %}>Karak</option>
+
+    <option value="Tafilah" {% if city == 'Tafilah' %}selected{% endif %}>Tafilah</option>
+
+    <option value="Maan" {% if city == 'Maan' %}selected{% endif %}>Maan</option>
+
+</select>
+            <select name="style" required>
+                <option value="">Select Style</option>
+
+                <option value="casual" {% if selected_style == 'casual' %}selected{% endif %}>Casual</option>
+                <option value="ethnic" {% if selected_style == 'ethnic' %}selected{% endif %}>Ethnic</option>
+                <option value="formal" {% if selected_style == 'formal' %}selected{% endif %}>Formal</option>
+                <option value="sports" {% if selected_style == 'sports' %}selected{% endif %}>Sports</option>
+            </select>
+
+            <button type="submit"
+                    class="main-btn">
+                Generate Outfit
+            </button>
+        </form>
+
+        {% if temperature %}
+
+            <div class="weather-box">
+                <h2>{{ city }}</h2>
+
+                <p>{{ temperature }} °C • {{ condition }}</p>
+
+                <p>{{ weather_type }}</p>
+
+                <p>Style: {{ selected_style }}</p>
+            </div>
+
+        {% endif %}
+
+        {% if outfits %}
+
+            <div class="outfits-wrapper">
+
+                {% for outfit in outfits %}
+
+                    {% set outfit_index = loop.index0 %}
+
+                    <div class="outfit-box">
+
+                        <h2>Outfit {{ loop.index }}</h2>
+
+                        <div class="closet-grid">
+
+                            {% for item in outfit %}
+
+                                <div class="closet-card">
+
+                                    <img src="{{ url_for(
+                                        'static',
+                                        filename='uploads/' +
+                                        session['user'] +
+                                        '/' +
+                                        item[2]
+                                    ) }}"
+                                    class="closet-img">
+
+
+
+                                    <div class="item-buttons">
+
+                                        <!-- CHANGE ITEM -->
+
+                                        <form method="POST"
+                                              action="/recommend"
+                                              class="change-form">
+
+                                            <input type="hidden"
+                                                   name="city"
+                                                   value="{{ city }}">
+
+                                            <input type="hidden"
+                                                   name="style"
+                                                   value="{{ selected_style }}">
+
+                                            <input type="hidden"
+                                                   name="target_outfit_index"
+                                                   value="{{ outfit_index }}">
+
+                                            {% for saved_outfit in outfits %}
+
+                                                {% set saved_index = loop.index0 %}
+
+                                                {% for saved_item in saved_outfit %}
+
+                                                    <input type="hidden"
+                                                           name="outfit_{{ saved_index }}_ids"
+                                                           value="{{ saved_item[0] }}">
+
+                                                {% endfor %}
+
+                                            {% endfor %}
+                                            <input type="hidden"
+                                                   name="action"
+                                                   value="change_item">
+
+                                            <input type="hidden"
+                                                   name="change_item_id"
+                                                   value="{{ item[0] }}">
+
+                                            <input type="hidden"
+                                                   name="change_type"
+                                                   value="{{ item[3] }}">
+
+                                            <button type="submit"
+                                                    class="change-btn">
+                                                Change Item
+                                            </button>
+
+                                        </form>
+
+                                        <!-- REMOVE ITEM -->
+
+                                        <form method="POST"
+                                              action="/recommend"
+                                              class="change-form">
+
+                                            <input type="hidden"
+                                                   name="city"
+                                                   value="{{ city }}">
+
+                                            <input type="hidden"
+                                                   name="style"
+                                                   value="{{ selected_style }}">
+
+                                            <input type="hidden"
+                                                   name="target_outfit_index"
+                                                   value="{{ outfit_index }}">
+
+                                            {% for saved_outfit in outfits %}
+
+                                                {% set saved_index = loop.index0 %}
+
+                                                {% for saved_item in saved_outfit %}
+
+                                                    <input type="hidden"
+                                                           name="outfit_{{ saved_index }}_ids"
+                                                           value="{{ saved_item[0] }}">
+
+                                                {% endfor %}
+
+                                            {% endfor %}
+
+                                            <input type="hidden"
+                                                   name="remove_item_id"
+                                                   value="{{ item[0] }}">
+
+                                            <button type="submit"
+                                                    class="delete-item-btn">
+                                                Remove Item
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <form method="POST"
+                              action="/wore_outfit"
+                              class="wear-form">
+
+                            <input type="hidden"
+                                   name="city"
+                                   value="{{ city }}">
+
+                            <input type="hidden"
+                                   name="temperature"
+                                   value="{{ temperature }}">
+
+                            <input type="hidden"
+                                   name="condition"
+                                   value="{{ condition }}">
+
+                            <input type="hidden"
+                                   name="weather_type"
+                                   value="{{ weather_type }}">
+
+                            {% for item in outfit %}
+
+                                <input type="hidden"
+                                       name="outfit_items"
+                                       value="{{ item[0] }}">
+
+                            {% endfor %}
+
+                            <button type="submit"
+                                    class="save-btn">
+                                Wear Outfit
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <script>
+        function toggleSidebar(){
+            document
+            .getElementById("sidebar")
+            .classList
+            .toggle("show-sidebar");
+        }
+    </script>
+
+</body>
+
+</html>

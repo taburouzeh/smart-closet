@@ -1,0 +1,369 @@
+
+@media(max-width:768px){
+
+    /* =========================
+       BUTTONS SIDE BY SIDE
+       ========================= */
+
+    .dashboard-buttons{
+        display:flex;
+        flex-direction:row;
+        gap:12px;
+        flex-wrap:wrap;
+    }
+
+    .dashboard-buttons a{
+        flex:1;
+    }
+
+    .dash-btn{
+        width:100%;
+        font-size:15px;
+        padding:14px;
+    }
+
+    /* =========================
+       CLOTHES HORIZONTAL SCROLL
+       ========================= */
+
+    .home-clothes{
+        display:flex;
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        gap:14px;
+        padding-bottom:10px;
+
+        scroll-snap-type:x mandatory;
+    }
+
+    .home-clothes::-webkit-scrollbar{
+        height:6px;
+    }
+
+    .home-clothes::-webkit-scrollbar-thumb{
+        background:#b68a60;
+        border-radius:20px;
+    }
+
+    .home-clothes-card{
+        min-width:170px;
+        flex:none;
+
+        scroll-snap-align:start;
+    }
+
+    .home-clothes-card img{
+        height:180px;
+        object-fit:contain;
+    }
+
+
+
+    html,
+    body{
+        overflow-x:hidden;
+    }
+
+    body{
+        font-size:15px;
+    }
+
+    /* =========================
+       NAVBAR
+       ========================= */
+
+    .navbar{
+        height:70px;
+        padding:0 14px;
+    }
+
+    .logo{
+        font-size:24px;
+    }
+
+    .menu-btn{
+        width:40px;
+        height:40px;
+        font-size:24px;
+    }
+
+    /* =========================
+       SIDEBAR
+       ========================= */
+
+    .sidebar{
+        width:240px;
+        left:-240px;
+        padding-top:80px;
+    }
+
+    .sidebar a{
+        font-size:16px;
+        padding:14px 20px;
+    }
+
+    .show-sidebar{
+        left:0;
+    }
+
+    /* =========================
+       MAIN CONTAINERS
+       ========================= */
+
+    .form-container,
+    .upload-box,
+    .dashboard-box,
+    .profile-box,
+    .closet-page-box{
+        width:100%;
+        max-width:100%;
+        padding:20px 16px;
+        border-radius:20px;
+    }
+
+    .upload-content,
+    .profile-page,
+    .closet-main{
+        padding:18px 12px;
+    }
+
+    /* =========================
+       TITLES
+       ========================= */
+
+    .content h1,
+    .closet-title,
+    .profile-box h1,
+    .upload-box h1,
+    .dashboard-box h1{
+        font-size:32px;
+        line-height:1.1;
+    }
+
+    .content p,
+    .closet-subtitle,
+    .upload-text,
+    .profile-subtitle{
+        font-size:15px;
+    }
+
+    /* =========================
+       FORMS
+       ========================= */
+
+    input,
+    select{
+        padding:14px;
+        font-size:15px;
+    }
+
+    .main-btn,
+    .save-btn,
+    .upload-btn{
+        padding:14px;
+        font-size:16px;
+    }
+
+/* ===== Make closet items compact ===== */
+
+.closet-grid{
+    display:grid !important;
+    grid-template-columns:repeat(5, 1fr) !important;
+    gap:8px !important;
+}
+
+.closet-card{
+    padding:8px !important;
+    border-radius:14px !important;
+}
+
+.closet-img{
+    width:100% !important;
+    height:140px !important;
+    object-fit:contain !important;
+    background:#f8f5f2;
+    border-radius:12px !important;
+    padding:6px;
+}
+
+.closet-controls{
+    display:grid !important;
+    grid-template-columns:repeat(2, 1fr) !important;
+    gap:6px !important;
+}
+
+.closet-controls select{
+    height:34px !important;
+    font-size:11px !important;
+    padding:4px 8px !important;
+    border-radius:12px !important;
+}
+
+.closet-card button,
+.closet-card .main-btn,
+.closet-card .delete-btn{
+    height:34px !important;
+    font-size:11px !important;
+    padding:4px !important;
+    border-radius:16px !important;
+}
+
+/* buttons beside each other */
+.closet-actions{
+    display:flex !important;
+    gap:6px !important;
+}
+
+.closet-actions button{
+    flex:1 !important;
+}
+
+/* mobile */
+@media (max-width:430px){
+    .closet-grid{
+        grid-template-columns:repeat(2, 1fr) !important;
+    }
+}
+
+
+
+
+
+    /* =========================
+       RECOMMENDATION
+       ========================= */
+
+    .outfits-wrapper{
+        flex-direction:column;
+        overflow-x:visible;
+        gap:18px;
+    }
+
+    .outfit-box{
+        width:100%;
+        min-width:100%;
+        padding:18px;
+    }
+
+    .recommend-page .closet-img{
+        height:200px;
+    }
+
+    .item-buttons{
+        grid-template-columns:1fr;
+    }
+
+    .change-btn,
+    .delete-item-btn{
+        height:48px;
+        font-size:15px;
+    }
+
+    /* =========================
+       WEATHER
+       ========================= */
+
+    .weather-box{
+        padding:22px;
+    }
+
+    .weather-box h2{
+        font-size:32px;
+    }
+
+    .weather-box p{
+        font-size:16px;
+    }
+
+
+
+    .profile-stats{
+        display:grid !important;
+        grid-template-columns:1fr 1fr !important;
+        gap:10px !important;
+        width:100% !important;
+        overflow:hidden !important;
+    }
+
+    .stat-link{
+        min-width:0 !important;
+        width:100% !important;
+        flex:none !important;
+    }
+
+    .stat-card{
+        width:100% !important;
+        padding:18px 8px !important;
+        border-radius:20px !important;
+        text-align:center !important;
+    }
+
+    .stat-card h2{
+        font-size:34px !important;
+        margin-bottom:8px !important;
+    }
+
+    .stat-card p{
+        font-size:14px !important;
+        line-height:1.2 !important;
+        white-space:normal !important;
+    }
+
+    .profile-buttons{
+        display:grid !important;
+        grid-template-columns:1fr 1fr !important;
+        gap:12px !important;
+        width:100% !important;
+    }
+
+    .profile-buttons a{
+        width:100% !important;
+        min-width:0 !important;
+    }
+
+    .profile-buttons .dash-btn{
+        width:100% !important;
+        padding:14px 8px !important;
+        font-size:15px !important;
+        white-space:nowrap !important;
+    }
+
+    .birthdate-box input, input[type="date"]{ max-width:220px; height:55px; font-size:15px; }
+
+    .profile-buttons a:last-child{
+        grid-column:1 / -1 !important;
+        width:45% !important;
+        margin:0 auto !important;
+    }
+
+
+
+    /* =========================
+       SAVED OUTFITS
+       ========================= */
+
+    .saved-outfit-header{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .saved-outfit-items{
+        justify-content:center;
+    }
+
+    .saved-outfit-item{
+        width:100%;
+    }
+
+
+    /* =========================
+       ALERT
+       ========================= */
+
+    .alert-box{
+        font-size:13px;
+        padding:10px;
+    }
+
+}
+

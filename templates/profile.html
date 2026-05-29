@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | Smart Closet</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile.css') }}">
+</head>
+
+<body>
+
+    <div id="sidebar" class="sidebar">
+
+        <button class="close-sidebar"
+                onclick="toggleSidebar()">✕</button>
+
+        <a href="/">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/upload">Upload</a>
+        <a href="/closet">My Closet</a>
+        <a href="/recommend">Recommend Outfit</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+    <div class="navbar">
+
+        <div class="left-nav">
+
+            <button class="menu-btn"
+                    onclick="toggleSidebar()">☰</button>
+
+            <h2 class="logo">Smart Closet</h2>
+
+        </div>
+
+    </div>
+
+    <div class="profile-page">
+
+        <div class="profile-box">
+
+            <div class="profile-icon">👤</div>
+
+            <h1>My Profile</h1>
+
+            <p class="profile-subtitle">
+                Manage your account information and wardrobe summary.
+            </p>
+
+            <form method="POST"
+                  action="/update_profile"
+                  class="profile-form">
+
+                <div class="profile-row">
+                    <span>Username</span>
+
+                    <input type="text"
+                           name="username"
+                           value="{{ user[0] }}"
+                           required>
+                </div>
+
+                <div class="profile-row">
+                    <span>Email</span>
+
+                    <input type="email"
+                           value="{{ user[1] }}"
+                           disabled>
+                </div>
+
+                <div class="profile-row">
+                    <span>Birthdate</span>
+
+                    <input type="date"
+                           name="birthdate"
+                           value="{{ user[2] }}">
+                </div>
+
+                <div class="profile-row">
+                    <span>Outfit Repeat Setting</span>
+
+                    <select name="avoid_days">
+
+                        <option value="1" {% if user[3] == 1 %}selected{% endif %}>
+                            Do not repeat for 1 day
+                        </option>
+
+                        <option value="7" {% if user[3] == 7 %}selected{% endif %}>
+                            Do not repeat for 1 week
+                        </option>
+
+                        <option value="30" {% if user[3] == 30 %}selected{% endif %}>
+                            Do not repeat for 1 month
+                        </option>
+
+                    </select>
+                </div>
+
+                <button type="submit"
+                        class="main-btn">
+                    Save Profile Changes
+                </button>
+
+            </form>
+
+            <a href="/change_password"
+               class="change-password-link">
+                Change Password
+            </a>
+
+            <div class="profile-stats">
+
+                <a href="/closet"
+                   class="stat-link">
+
+                    <div class="stat-card">
+                        <h2>{{ clothes_count }}</h2>
+                        <p>Uploaded Clothes</p>
+                    </div>
+
+                </a>
+
+                <a href="/saved_outfits"
+                   class="stat-link">
+
+                    <div class="stat-card">
+                        <h2>{{ outfits_count }}</h2>
+                        <p>Saved Outfits</p>
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="profile-buttons">
+
+                <a href="/closet">
+                    <button class="dash-btn">My Closet</button>
+                </a>
+
+                <a href="/recommend">
+                    <button class="dash-btn main-dash-btn">
+                        Recommend Outfit
+                    </button>
+                </a>
+
+                <a href="/logout">
+                    <button class="delete-btn">Logout</button>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSidebar(){
+            document.getElementById("sidebar").classList.toggle("show-sidebar");
+        }
+    </script>
+
+</body>
+
+</html>

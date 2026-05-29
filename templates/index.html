@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Closet</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h2 class="logo">Smart Closet</h2>
+
+        <div class="nav-links">
+
+            <a href="/login">
+                <button class="nav-btn">
+                    Login
+                </button>
+            </a>
+
+            <a href="/register">
+                <button class="nav-btn register-btn">
+                    Register
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO SECTION -->
+
+    <div class="hero-section">
+
+        <div class="overlay"></div>
+
+        <div class="content">
+
+            <h1>Welcome to Smart Closet</h1>
+
+            <h2>Your AI Fashion Assistant</h2>
+
+            <p>
+                Organize your wardrobe, discover outfit ideas,
+                and dress smarter every day.
+            </p>
+
+            <a href="/register">
+
+                <button class="start-btn">
+                    Get Started
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

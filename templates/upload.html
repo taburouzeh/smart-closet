@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Upload Clothes | Smart Closet
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile.css') }}">
+
+</head>
+
+<body class="upload-page">
+
+    <!-- SIDEBAR -->
+
+    <div id="sidebar" class="sidebar">
+
+        <button class="close-sidebar"
+                onclick="toggleSidebar()">
+
+            ✕
+
+        </button>
+
+        <a href="/">Home</a>
+
+        <a href="/profile">Profile</a>
+
+        <a href="/upload">Upload</a>
+
+        <a href="/closet">My Closet</a>
+
+        <a href="/recommend">Recommend Outfit</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="left-nav">
+
+            <button class="menu-btn"
+                    onclick="toggleSidebar()">
+
+                ☰
+
+            </button>
+
+            <h2 class="logo">
+
+                Smart Closet
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <!-- PAGE -->
+
+    <div class="upload-content">
+
+        <div class="upload-box">
+
+            <h1>
+
+                Upload Your Clothes
+
+            </h1>
+
+            <p class="upload-text">
+
+                Add your fashion items to your smart wardrobe.
+
+            </p>
+
+            <!-- FLASH MESSAGES -->
+
+            {% with messages = get_flashed_messages() %}
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="flash-message">
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+            <!-- FORM -->
+
+            <form method="POST"
+                  enctype="multipart/form-data">
+
+                <div class="upload-area">
+
+                    <label for="image-upload"
+                           class="custom-upload">
+
+                        Choose Image
+
+                    </label>
+
+                    <input type="file"
+                           id="image-upload"
+                           name="image"
+                           accept="image/*"
+                           required>
+
+                    <img id="preview-image"
+                         class="preview-image">
+
+                </div>
+
+                <button type="submit"
+                        class="main-btn upload-btn">
+
+                    Upload Item
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        function toggleSidebar(){
+
+            document
+            .getElementById("sidebar")
+            .classList
+            .toggle("show-sidebar");
+
+        }
+
+        const imageInput =
+        document.getElementById("image-upload");
+
+        const previewImage =
+        document.getElementById("preview-image");
+
+        const uploadLabel =
+        document.querySelector(".custom-upload");
+
+        imageInput.onchange = function(){
+
+            const file = imageInput.files[0];
+
+            if(file){
+
+                previewImage.src =
+                URL.createObjectURL(file);
+
+                previewImage.style.display = "block";
+
+                uploadLabel.innerHTML = "";
+
+                uploadLabel.appendChild(previewImage);
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Closet | Smart Closet</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile.css') }}">
+</head>
+
+<body class="closet-page">
+    <div id="sidebar" class="sidebar">
+
+        <button class="close-sidebar"
+                onclick="toggleSidebar()">
+
+            ✕
+
+        </button>
+
+        <a href="/">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/upload">Upload</a>
+        <a href="/closet">My Closet</a>
+        <a href="/recommend">Recommend Outfit</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+    <div class="navbar">
+
+        <div class="left-nav">
+
+            <button class="menu-btn"
+                    onclick="toggleSidebar()">
+
+                ☰
+
+            </button>
+
+            <h2 class="logo">
+
+                Smart Closet
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="closet-main">
+
+        <h1 class="closet-title">
+
+            My Closet
+
+        </h1>
+
+        <p class="closet-subtitle">
+
+            View, edit, search, filter, and manage all your uploaded clothes.
+
+        </p>
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                <div class="closet-alert">
+
+                    {% for message in messages %}
+
+                        {{ message }}
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+        {% if clothes %}
+
+            <div class="closet-controls">
+
+                <input type="text"
+                       id="searchInput"
+                       placeholder="Search by category, color, style, or weather...">
+
+                <select id="categoryFilter">
+
+                    <option value="">All Categories</option>
+
+                    <option value="tshirts">Tshirts</option>
+                    <option value="pants">Pants</option>
+                    <option value="shoes">Shoes</option>
+                    <option value="dresses">Dresses</option>
+                    <option value="jackets">Jackets</option>
+                    <option value="sweaters">Sweaters</option>
+                    <option value="shorts">Shorts</option>
+                    <option value="accessories">Accessories</option>
+
+                </select>
+
+                <select id="colorFilter">
+
+                    <option value="">All Colors</option>
+
+                    <option value="black">black</option>
+                    <option value="white">white</option>
+                    <option value="blue">blue</option>
+                    <option value="red">red</option>
+                    <option value="green">green</option>
+                    <option value="pink">pink</option>
+                    <option value="grey">grey</option>
+                    <option value="beige">beige</option>
+                    <option value="brown">brown</option>
+                    <option value="navy blue">navy blue</option>
+
+                </select>
+
+                <select id="styleFilter">
+
+                    <option value="">All Styles</option>
+
+                    <option value="casual">casual</option>
+                    <option value="formal">formal</option>
+                    <option value="ethnic">ethnic</option>
+                    <option value="sporty">sporty</option>
+                    <option value="sports">sports</option>
+
+                </select>
+
+                <select id="weatherFilter">
+
+                    <option value="">All Weather</option>
+
+                    <option value="hot weather">Hot Weather</option>
+                    <option value="mild weather">Mild Weather</option>
+                    <option value="cold weather">Cold Weather</option>
+                    <option value="all weather">All Weather</option>
+
+                </select>
+
+                <select id="sortSelect">
+
+                    <option value="newest">Sort: Newest</option>
+                    <option value="category">Sort: Category</option>
+                    <option value="color">Sort: Color</option>
+                    <option value="style">Sort: Style</option>
+                    <option value="weather">Sort: Weather</option>
+
+                </select>
+
+            </div>
+
+            <p id="resultsCount"
+               class="closet-subtitle"></p>
+
+        {% endif %}
+
+        <div class="closet-grid"
+             id="closetGrid">
+
+            {% if clothes %}
+
+                {% for item in clothes %}
+
+                    <div class="closet-card"
+                         data-category="{{ item[3]|lower }}"
+                         data-color="{{ item[4]|lower }}"
+                         data-style="{{ item[5]|lower }}"
+                         data-weather="{{ item[6]|lower }}"
+                         data-index="{{ loop.index }}">
+
+                        <img class="closet-img"
+                             src="{{ url_for('static', filename='uploads/' + item[1] + '/' + item[2]) }}">
+
+                        <form method="POST"
+                              action="/update/{{ item[0] }}">
+
+                            <select name="category">
+
+                                <option value="{{ item[3] }}">
+
+                                    {{ item[3] }}
+
+                                </option>
+
+                                <option value="Tshirts">Tshirts</option>
+                                <option value="Pants">Pants</option>
+                                <option value="Shoes">Shoes</option>
+                                <option value="Dresses">Dresses</option>
+                                <option value="Jackets">Jackets</option>
+                                <option value="Sweaters">Sweaters</option>
+                                <option value="Shorts">Shorts</option>
+                                <option value="Accessories">Accessories</option>
+
+                            </select>
+
+                            <select name="color">
+
+                                <option value="{{ item[4] }}">
+
+                                    {{ item[4] }}
+
+                                </option>
+
+                                <option value="black">black</option>
+                                <option value="white">white</option>
+                                <option value="blue">blue</option>
+                                <option value="red">red</option>
+                                <option value="green">green</option>
+                                <option value="pink">pink</option>
+                                <option value="grey">grey</option>
+                                <option value="beige">beige</option>
+                                <option value="brown">brown</option>
+                                <option value="navy blue">navy blue</option>
+
+                            </select>
+
+                            <select name="style">
+
+                                <option value="{{ item[5] }}">
+
+                                    {{ item[5] }}
+
+                                </option>
+
+                                <option value="casual">casual</option>
+                                <option value="formal">formal</option>
+                                <option value="ethnic">ethnic</option>
+                                <option value="sports">sports</option>
+
+                            </select>
+
+                            <select name="suitable_weather">
+
+                                <option value="{{ item[6] }}">
+
+                                    {{ item[6] }}
+
+                                </option>
+
+                                <option value="Hot Weather">Hot Weather</option>
+                                <option value="Mild Weather">Mild Weather</option>
+                                <option value="Cold Weather">Cold Weather</option>
+                                <option value="All Weather">All Weather</option>
+
+                            </select>
+
+                            <button type="submit"
+                                    class="save-btn">
+
+                                Save Changes
+
+                            </button>
+
+                        </form>
+
+                        {% if needs_alert(item[7]) %}
+
+                            <div class="alert-box">
+
+                                ⚠ You have not worn this item for 3 months
+
+                            </div>
+
+                        {% endif %}
+
+                        <a href="/delete/{{ item[0] }}">
+
+                            <button class="delete-btn">
+
+                                Delete
+
+                            </button>
+
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="empty-text">
+
+                    No clothes uploaded yet.
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function toggleSidebar(){
+
+            document
+            .getElementById("sidebar")
+            .classList
+            .toggle("show-sidebar");
+
+        }
+
+        setTimeout(function(){
+
+            let flash =
+            document.querySelector('.closet-alert');
+
+            if(flash){
+
+                flash.style.display = 'none';
+
+            }
+
+        }, 3000);
+
+        const searchInput =
+        document.getElementById("searchInput");
+
+        const categoryFilter =
+        document.getElementById("categoryFilter");
+
+        const colorFilter =
+        document.getElementById("colorFilter");
+
+        const styleFilter =
+        document.getElementById("styleFilter");
+
+        const weatherFilter =
+        document.getElementById("weatherFilter");
+
+        const sortSelect =
+        document.getElementById("sortSelect");
+
+        const closetGrid =
+        document.getElementById("closetGrid");
+
+        const resultsCount =
+        document.getElementById("resultsCount");
+
+        function filterAndSortCloset(){
+
+            const cards =
+            Array.from(document.querySelectorAll(".closet-card"));
+
+            const searchText =
+            searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+            const selectedCategory =
+            categoryFilter ? categoryFilter.value : "";
+
+            const selectedColor =
+            colorFilter ? colorFilter.value : "";
+
+            const selectedStyle =
+            styleFilter ? styleFilter.value : "";
+
+            const selectedWeather =
+            weatherFilter ? weatherFilter.value : "";
+
+            const sortValue =
+            sortSelect ? sortSelect.value : "newest";
+
+            let visibleCards = [];
+
+            cards.forEach(function(card){
+
+                const category = card.dataset.category || "";
+                const color = card.dataset.color || "";
+                const style = card.dataset.style || "";
+                const weather = card.dataset.weather || "";
+
+                const allText =
+                category + " " +
+                color + " " +
+                style + " " +
+                weather;
+
+                const matchesSearch =
+                allText.includes(searchText);
+
+                const matchesCategory =
+                selectedCategory === "" ||
+                category === selectedCategory;
+
+                const matchesColor =
+                selectedColor === "" ||
+                color === selectedColor;
+
+                const matchesStyle =
+                selectedStyle === "" ||
+                style === selectedStyle;
+
+                const matchesWeather =
+                selectedWeather === "" ||
+                weather === selectedWeather;
+
+                if(
+                    matchesSearch &&
+                    matchesCategory &&
+                    matchesColor &&
+                    matchesStyle &&
+                    matchesWeather
+                ){
+
+                    card.style.display = "block";
+                    visibleCards.push(card);
+
+                }else{
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+            visibleCards.sort(function(a, b){
+
+                if(sortValue === "newest"){
+
+                    return Number(a.dataset.index)
+                    - Number(b.dataset.index);
+
+                }
+
+                return (a.dataset[sortValue] || "")
+                    .localeCompare(b.dataset[sortValue] || "");
+
+            });
+
+            visibleCards.forEach(function(card){
+
+                closetGrid.appendChild(card);
+
+            });
+
+            if(resultsCount){
+
+                resultsCount.innerText =
+                visibleCards.length + " item(s) found";
+
+            }
+
+        }
+
+        if(searchInput){
+
+            searchInput.addEventListener(
+                "input",
+                filterAndSortCloset
+            );
+
+            categoryFilter.addEventListener(
+                "change",
+                filterAndSortCloset
+            );
+
+            colorFilter.addEventListener(
+                "change",
+                filterAndSortCloset
+            );
+
+            styleFilter.addEventListener(
+                "change",
+                filterAndSortCloset
+            );
+
+            weatherFilter.addEventListener(
+                "change",
+                filterAndSortCloset
+            );
+
+            sortSelect.addEventListener(
+                "change",
+                filterAndSortCloset
+            );
+
+            filterAndSortCloset();
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+```

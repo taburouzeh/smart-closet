@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Saved Outfits | Smart Closet</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile.css') }}">
+</head>
+
+<body>
+
+    <div id="sidebar" class="sidebar">
+
+        <button class="close-sidebar"
+                onclick="toggleSidebar()">✕</button>
+
+        <a href="/">Home</a>
+        <a href="/upload">Upload</a>
+        <a href="/closet">My Closet</a>
+        <a href="/recommend">Recommend Outfit</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+    <div class="navbar">
+
+        <div class="left-nav">
+
+            <button class="menu-btn"
+                    onclick="toggleSidebar()">☰</button>
+
+            <h2 class="logo">Smart Closet</h2>
+
+        </div>
+
+    </div>
+
+    <div class="closet-main">
+
+        <h1 class="closet-title">Saved Outfits</h1>
+
+        <p class="closet-subtitle">
+            Your previously worn outfits.
+        </p>
+
+        <div class="saved-outfits-grid">
+
+            {% if saved_outfits %}
+
+                {% for outfit_id, outfit in saved_outfits.items() %}
+
+                    <div class="saved-outfit-card">
+
+                        <div class="saved-outfit-header">
+
+    <div>
+
+        <h2>Outfit #{{ outfit_id }}</h2>
+
+        <p>
+            {{ outfit.city }} |
+            {{ outfit.temperature }}°C |
+            {{ outfit.condition }} |
+            {{ outfit.weather_type }}
+        </p>
+
+        <p class="saved-date">
+            {{ outfit.created_at }}
+        </p>
+
+    </div>
+
+    <a href="/delete_saved_outfit/{{ outfit_id }}"
+       class="delete-outfit-btn">
+
+        Delete Outfit
+
+    </a>
+
+</div>
+
+                        <div class="saved-outfit-items">
+                            {% for item in outfit["items"] %}
+                                <div class="saved-outfit-item">
+
+                                    <img src="{{ url_for('static', filename='uploads/' + session['user'] + '/' + item.image_name) }}">
+
+                                    <p>{{ item.category }}</p>
+                                    <p>{{ item.color }} - {{ item.style }}</p>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="empty-text">No saved outfits yet.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSidebar(){
+            document.getElementById("sidebar").classList.toggle("show-sidebar");
+        }
+    </script>
+
+</body>
+
+</html>

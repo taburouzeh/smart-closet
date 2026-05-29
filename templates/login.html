@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Smart Closet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/mobile.css') }}">
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2 class="logo">Smart Closet</h2>
+
+        <div class="nav-links">
+
+            <a href="/">
+                <button class="nav-btn">Home</button>
+            </a>
+
+            <a href="/register">
+                <button class="nav-btn register-btn">Register</button>
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="form-page">
+
+        <div class="form-container">
+
+            <h1>Welcome Back</h1>
+
+            <p class="form-text">
+                Login to access your smart wardrobe.
+            </p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+
+                <input type="email"
+                       name="email"
+                       placeholder="Enter Email"
+                       required>
+
+                <input type="password"
+                       name="password"
+                       placeholder="Enter Password"
+                       required>
+
+                <button type="submit" class="main-btn">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
